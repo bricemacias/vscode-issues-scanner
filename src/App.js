@@ -61,7 +61,7 @@ function App() {
           <p className="flex flex-column tj pa2">
             {`
               À l’aide de l’API github, vous devrez réaliser une datavisualisation sur les issues du repository microsoft/vscode, à partir d’une base de projet (https://github.com/Askmona/`}
-            <div className="responsive-display-320">{` `}</div>
+            <span className="responsive-display-320">{` `}</span>
             {`test_front) que nous vous aurons fourni.
               Voici la consigne :
               Vous devrez afficher un graphique ligne permettant de suivre l’évolution du nombre d’issues actives dans le temps (Bonus: Ajout de date picker permettant de visualiser les données sur une période sélectionnée). Pour ce faire vous devrez utiliser la librairie chartjs.org
@@ -71,13 +71,13 @@ function App() {
               PS: Voici une liste de lien pour chartjs qui vous aideront à appréhender la librairie plus rapidement :
 
               https://www.chartjs.org/docs/`}
-            <div className="responsive-display-320">{` `}</div>
+            <span className="responsive-display-320">{` `}</span>
             {`latest/getting-started/usage.html
               https://www.chartjs.org/docs/`}
-            <div className="responsive-display-420">{` `}</div>
+            <span className="responsive-display-420">{` `}</span>
             {`latest/charts/line.html
               https://www.chartjs.org/docs/`}
-            <div className="responsive-display-410">{` `}</div>
+            <span className="responsive-display-410">{` `}</span>
             {`latest/axes/cartesian/time.html
               
               

@@ -50,8 +50,3 @@ export const Menu = styled.div.attrs({
   className: 'tc flex justify-around',
   id: 'menu'
 })``;
-
-export const Link = styled.Link.attrs({
-  className: 'tc flex justify-around',
-  id: 'menu'
-})``;
