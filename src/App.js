@@ -23,7 +23,7 @@ function App() {
       <Container>
         <Box>
           <Router>
-            <Header className="bg-black tc">
+            <Header>
               <Title>Visual Studio Code Issues Scanner</Title>
             </Header>
             <Nav>
