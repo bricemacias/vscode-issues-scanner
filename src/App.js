@@ -58,7 +58,7 @@ function App() {
               <Route path="/authors" component={Authors} />
             </Switch>
           </Router>
-          <p className="flex flex-column tj pa2">
+          {/* <p className="flex flex-column tj pa2">
             {`
               À l’aide de l’API github, vous devrez réaliser une datavisualisation sur les issues du repository microsoft/vscode, à partir d’une base de projet (https://github.com/Askmona/`}
             <span className="responsive-display-320">{` `}</span>
@@ -84,7 +84,7 @@ function App() {
               De plus vous rencontrerez surement des limitations sur l’api github, nous vous invitons à être ingénieux quant à la mise en cache des données en local.
               Bonne chance !
             `}
-          </p>
+          </p> */}
         </Box>
       </Container>
     </ThemeProvider>
