@@ -30,9 +30,11 @@ export const Header = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   justify-content: center;
   background: no-repeat center center;
   background-size: 100% 100%;
+  background-color: black;
   color: white;
 `;
 
