@@ -26,9 +26,7 @@ export const Box = styled.div`
   text-wrap: avoid;
 `;
 
-export const Header = styled.div.attrs({
-  className: 'bg-black tc'
-})`
+export const Header = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
