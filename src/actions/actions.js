@@ -11,7 +11,14 @@ export const requestLabelIssues = pageNumber => dispacth => {
         headersPayload: response.headers,
         issuesPayload: response.data
       })
-    );
+    )
+    .catch(err => {
+      alert(`Something went wrong, the following error occured : ${err}`);
+      dispacth({
+        type: 'FETCHERROR',
+        payload: err
+      });
+    });
 };
 
 export const setPage = pageValue => ({

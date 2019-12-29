@@ -2,7 +2,8 @@ const initialState = {
   labelHeaders: [],
   labelIssues: [],
   totalIssues: [],
-  pageNumber: 1
+  pageNumber: 1,
+  error: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -12,6 +13,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         labelIssues: action.issuesPayload,
         labelHeaders: action.headersPayload
+      };
+    case 'FETCHERROR':
+      return {
+        ...state,
+        error: action.payload
       };
     case 'NEXTPAGE':
       return {

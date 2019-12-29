@@ -46,7 +46,7 @@ const Authors = () => {
           Search
         </button>
       </div>
-      {fetchedName ===
+      {fetchedName.data ===
       `Sorry, this user didn't post any issue on this repository` ? (
         <p className="ml3">{fetchedName.data}</p>
       ) : fetchedName ? (

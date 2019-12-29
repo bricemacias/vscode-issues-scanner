@@ -4,6 +4,7 @@ import { Bar } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 
 import { requestLabelIssues, setPage, nextPage } from '../actions/actions';
+// Ce composant utilise redux pour la gestion d'état (même si ce n'est pas indispensable)
 
 const Labels = ({
   onRequestLabelIssues,
@@ -12,18 +13,24 @@ const Labels = ({
   pageNumber,
   issues
 }) => {
+  // Execute la fonction permettant de récupérer les données dès que le composant est monté ou que le numéro de la page est changé
   useEffect(() => {
     (async function fetchIssues() {
       await onRequestLabelIssues(pageNumber);
     })();
   }, [onRequestLabelIssues, pageNumber]);
 
+  // Initialisation de vecteurs permettant de fournir les données au graphique
   const labeledIssues = [];
   const labeledNumbers = [];
 
   return (
     <div>
       <h1 className="mb4"> Labels </h1>
+      <div>
+        <p>{`Les issues sont classées de la date de création la plus récente, correspondant au n°1, à la plus ancienne. 
+        Changer de page pour charger plus de résultats, et attendez que les résultats se chargent.`}</p>
+      </div>
       <button onClick={onNextPage}>Next Page</button>
       {!issues ? (
         <p>Loading</p>
@@ -33,6 +40,7 @@ const Labels = ({
           labeledNumbers.push((pageNumber - 1) * 100 + issues.indexOf(el))
         ))
       )}
+
       {!labeledIssues && !labeledNumbers ? (
         <p>Loading</p>
       ) : (
