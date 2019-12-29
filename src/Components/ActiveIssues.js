@@ -2,23 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
+import DatePicker from 'react-datepicker';
+import { addDays } from 'date-fns';
 
 import axios from 'axios';
 
 const moment = extendMoment(Moment);
 
 const ActiveIssues = () => {
-  const [range, setRange] = useState([moment('2019-01'), moment('2019-12')]);
-  const [data, setData] = useState([]);
   const [isBroken, setIsBroken] = useState(0);
+  const [data, setData] = useState([]);
+
+  const [startDate, setStartDate] = useState(new Date('2019/03'));
+  const [endDate, setEndDate] = useState(new Date('2019/12'));
+  const [rangeArray, setRangeArray] = useState([]);
 
   useEffect(() => {
-    const rangeMoment = moment.range(range[0], range[1]);
-    const rangeObject = Array.from(rangeMoment.by('months'));
-    const rangeArray = rangeObject.map(m => m.format('YYYY-MM'));
+    setData([]);
+    const rangeMoment = moment.range(moment(startDate), moment(endDate));
+    console.log(rangeMoment);
+    const rangeYears = Array.from(rangeMoment.by('Years'));
+    const rangeMonths = Array.from(rangeMoment.by('months'));
+    const rangeDays = Array.from(rangeMoment.by('days'));
+    //let rangeArray = {};
+    // if (rangeYears.length > 2) {
+    //   rangeArray = rangeYears.map(m => m.format('YYYY'));
+    // } else if (rangeMonths > 1) {
+    //   rangeArray = rangeMonths.map(m => m.format('YYYY-MM'));
+    // } else {
+    //   rangeArray = rangeDays.map(m => m.format('YYYY-MM-DD'));
+    // }
+    // console.log(rangeYears);
+    // console.log(rangeMonths);
+    // console.log(rangeDays);
+    const rangeArray = rangeMonths.map(m => m.format('YYYY-MM'));
+
     for (let el of rangeArray) {
       if (isBroken === 1) {
-        console.log('BONJOUUUUUR');
         break;
       } else if (isBroken === 0) {
         axios
@@ -47,7 +67,7 @@ const ActiveIssues = () => {
           });
       }
     }
-  }, []);
+  }, [startDate, endDate]);
 
   return (
     <div>
@@ -59,11 +79,56 @@ const ActiveIssues = () => {
       ) : (
         <p>
           Afin d'éviter de surcharger l'API, essayer d'espacer vos requêtes de
-          quelques secondes
+          quelques secondes. Une limite de deux ans d'intervalle a également été
+          fixée
         </p>
       )}
       <br />
-      <button onClick={() => console.log(isBroken)}>Click</button>
+      <DatePicker
+        selected={startDate}
+        onChange={date => {
+          setStartDate(date);
+          setEndDate(addDays(date, 365));
+        }}
+        minDate={new Date('2015/11')}
+        maxDate={new Date()}
+        selectsStart
+        startDate={startDate}
+        endDate={endDate}
+        dateFormat="MM/yyyy"
+        showMonthYearPicker
+      />
+      <DatePicker
+        selected={endDate}
+        onChange={date => setEndDate(date)}
+        selectsEnd
+        startDate={startDate}
+        endDate={endDate}
+        minDate={startDate}
+        maxDate={addDays(startDate, 730)}
+        dateFormat="MM/yyyy"
+        showMonthYearPicker
+      />
+      {/* <DatePicker
+        selected={startDate}
+        onChange={date => setStartDate(date)}
+        dateFormat="dd/MM/yyyy"
+        minDate={new Date('2015/11/17')}
+        maxDate={new Date()}
+        selectsStart
+        startDate={startDate}
+        endDate={endDate}
+      />
+      <DatePicker
+        selected={endDate}
+        onChange={date => setEndDate(date)}
+        dateFormat="dd/MM/yyyy"
+        selectsEnd
+        startDate={startDate}
+        endDate={endDate}
+        minDate={startDate}
+        maxDate={new Date()}
+      /> */}
       {!data ? (
         <p>Loading</p>
       ) : (
