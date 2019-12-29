@@ -1,18 +1,25 @@
 const initialState = {
-  issues: [],
+  labelHeaders: [],
+  labelIssues: [],
+  // activeHeaders: [],
+  // activeIssues: [],
   totalIssues: [],
-  headers: [],
   pageNumber: 1
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET':
+    case 'GETLABLEISSUES':
       return {
         ...state,
-        issues: action.issuesPayload,
-        headers: action.headersPayload
+        labelIssues: action.issuesPayload,
+        labelHeaders: action.headersPayload
       };
+    // case 'GETACTIVEISSUES':
+    //   return {
+    //     ...state,
+    //     activeIssues: [...state.activeIssues, action.activeIssues]
+    //   };
     case 'NEXTPAGE':
       return {
         ...state,

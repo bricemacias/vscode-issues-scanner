@@ -3,32 +3,37 @@ import { Bar } from 'react-chartjs-2';
 
 import { connect } from 'react-redux';
 
-import { requestIssues, setPage, nextPage } from '../actions/actions';
+import { requestLabelIssues, setPage, nextPage } from '../actions/actions';
 
-function Label({ onRequestIssues, onSetPage, onNextPage, pageNumber, issues }) {
+const Labels = ({
+  onRequestLabelIssues,
+  onSetPage,
+  onNextPage,
+  pageNumber,
+  issues
+}) => {
   useEffect(() => {
     (async function fetchIssues() {
-      await onRequestIssues(pageNumber);
+      await onRequestLabelIssues(pageNumber);
     })();
-  }, [onRequestIssues, pageNumber]);
+  }, [onRequestLabelIssues, pageNumber]);
 
   const labeledIssues = [];
-  const labeledNames = [];
   const labeledNumbers = [];
 
   return (
     <div>
+      <h1 className="mb4"> Labels </h1>
       <button onClick={onNextPage}>Next Page</button>
-      <p>{issues.total_count}</p>
       {!issues ? (
         <p>Loading</p>
       ) : (
-        issues.forEach(el => labeledIssues.push(el.labels.length)) &
+        (issues.forEach(el => labeledIssues.push(el.labels.length)),
         issues.forEach(el =>
           labeledNumbers.push((pageNumber - 1) * 100 + issues.indexOf(el))
-        )
+        ))
       )}
-      {!labeledIssues && !labeledNames ? (
+      {!labeledIssues && !labeledNumbers ? (
         <p>Loading</p>
       ) : (
         <Bar
@@ -47,12 +52,12 @@ function Label({ onRequestIssues, onSetPage, onNextPage, pageNumber, issues }) {
       )}
     </div>
   );
-}
+};
 
 const mapStateToProps = state => {
   return {
     pageNumber: state.pageNumber,
-    issues: state.issues
+    issues: state.labelIssues
   };
 };
 
@@ -60,8 +65,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onSetPage: number => dispatch(setPage(number)),
     onNextPage: () => dispatch(nextPage()),
-    onRequestIssues: page => dispatch(requestIssues(page))
+    onRequestLabelIssues: page => dispatch(requestLabelIssues(page))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Label);
+export default connect(mapStateToProps, mapDispatchToProps)(Labels);
