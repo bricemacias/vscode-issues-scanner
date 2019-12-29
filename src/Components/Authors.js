@@ -52,7 +52,7 @@ const Authors = () => {
       ) : fetchedName ? (
         <p className="ml3">
           <strong>{fetchedName.name}</strong>
-          {`: ${fetchedName.data.total_count} issues opened in total`}
+          {`: ${fetchedName.data.total_count} issues opened by this user in this repository`}
         </p>
       ) : (
         <p></p>

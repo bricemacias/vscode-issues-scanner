@@ -21,7 +21,7 @@ const ActiveIssues = () => {
   const fetchData = (aStartDate, aEndDate, aDateType, format) => {
     const rangeMoment = moment.range(moment(aStartDate), moment(aEndDate));
     const rangeObject = Array.from(rangeMoment.by(aDateType));
-    const rangeArray = rangeObject.map(m => m.format('YYYY-MM-DD'));
+    const rangeArray = rangeObject.map(m => m.format(format));
     console.log(rangeObject);
     console.log(rangeArray);
 
@@ -50,7 +50,7 @@ const ActiveIssues = () => {
     }
   };
 
-  // Permet de lancer la lancer la fonction fetchData dès que le composant est monté ou que les dates de début et de fin sont changées. Il règle également le type d'unité utilisé (jours, mois, années) en fonction de la taille de l'espacement entre les dates demandées
+  // Permet de lancer lancer la fonction fetchData dès que le composant est monté ou que les dates de début et de fin sont changées. Il règle également le type d'unité utilisé (jours, mois, années) en fonction de la taille de l'espacement entre les dates demandées
   useEffect(() => {
     setData([]);
     setIsBroken(0);
@@ -60,13 +60,13 @@ const ActiveIssues = () => {
     console.log(monthsNumber);
     if (monthsNumber === 1) {
       setDateType('day');
-      fetchData(startDate, endDate, `days`);
+      fetchData(startDate, endDate, `days`, 'YYYY-MM-DD');
     } else if (monthsNumber > 1 && monthsNumber < 24) {
       setDateType('month');
-      fetchData(startDate, endDate, `months`);
+      fetchData(startDate, endDate, `months`, 'YYYY-MM');
     } else if (monthsNumber >= 24) {
       setDateType('year');
-      fetchData(startDate, endDate, `years`);
+      fetchData(startDate, endDate, `years`, 'YYYY');
     } else {
     }
   }, [startDate, endDate]);
