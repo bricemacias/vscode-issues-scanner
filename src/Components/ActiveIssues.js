@@ -19,7 +19,7 @@ const ActiveIssues = () => {
   const [dateType, setDateType] = useState('day');
 
   // La fonction permettant de récupérer les données de l'API
-  const fetchData = (aStartDate, aEndDate, aDateType) => {
+  const fetchData = (aStartDate, aEndDate, aDateType, format) => {
     const rangeMoment = moment.range(moment(aStartDate), moment(aEndDate));
     const rangeObject = Array.from(rangeMoment.by(aDateType));
     const rangeArray = rangeObject.map(m => m.format('YYYY-MM-DD'));
@@ -40,10 +40,7 @@ const ActiveIssues = () => {
           setData(data => [
             ...data,
             {
-              x: moment(response.data.items[0].created_at).subtract(
-                1,
-                aDateType
-              ),
+              x: moment(el).subtract(1, aDateType),
               y: response.data.total_count
             }
           ])
@@ -54,68 +51,34 @@ const ActiveIssues = () => {
     }
   };
 
-  // Permet de lancer la lancer la fonction fetchData lors dès que le composant est monté ou que les dates de début et de fin sont changées
+  // Permet de lancer la lancer la fonction fetchData dès que le composant est monté ou que les dates de début et de fin sont changées. Il règle également le type d'unité utilisé (jours, mois, années) en fonction de la taille de l'espacement entre les dates demandées
   useEffect(() => {
     setData([]);
-    fetchData(startDate, endDate, `${dateType}s`);
-    // const rangeMoment = moment.range(moment(startDate), moment(endDate));
-    // console.log(rangeMoment);
-    // const rangeYears = Array.from(rangeMoment.by('years'));
-    // const rangeMonths = Array.from(rangeMoment.by('months'));
-    // const rangeDays = Array.from(rangeMoment.by('days'));
-
-    // let rangeArray = {};
-    // if (rangeYears.length > 2) {
-    //   setRangeArray(rangeYears.map(m => m.format('YYYY')));
-    // } else if (rangeMonths > 1) {
-    //   setRangeArray(rangeMonths.map(m => m.format('YYYY-MM')));
-    // } else {
-    //   setRangeArray(rangeDays.map(m => m.format('YYYY-MM-DD')));
-    // }
-    // console.log(rangeYears);
-    // console.log(rangeMonths);
-    // console.log(rangeDays);
-
-    // const rangeArray = rangeMonths.map(m => m.format('YYYY-MM'));
-
-    // for (let el of rangeArray) {
-    //   if (isBroken === 1) {
-    //     break;
-    //   } else if (isBroken === 0) {
-    //     axios
-    //       .get(
-    //         `https://api.github.com/search/issues?q=repo:microsoft/vscode%20state:open%20created:${el}&per_page=1`,
-    //         {
-    //           headers: {
-    //             Authorization: `Token a78c9527482b423d8c92e3b805bfe2081582daea`
-    //           }
-    //         }
-    //       )
-    //       .then(response =>
-    //         setData(data => [
-    //           ...data,
-    //           {
-    //             x: moment(response.data.items[0].created_at).subtract(
-    //               1,
-    //               'months'
-    //             ),
-    //             y: response.data.total_count
-    //           }
-    //         ])
-    //       )
-    //       .catch(err => {
-    //         setIsBroken(1);
-    //       });
-    //   }
-    // }
+    setIsBroken(0);
+    const rangeMoment = moment.range(moment(startDate), moment(endDate));
+    const rangeInMonths = Array.from(rangeMoment.by('months'));
+    const monthsNumber = rangeInMonths.length;
+    console.log(monthsNumber);
+    if (monthsNumber === 1) {
+      setDateType('day');
+      fetchData(startDate, endDate, `days`);
+    } else if (monthsNumber > 1 && monthsNumber < 24) {
+      setDateType('month');
+      fetchData(startDate, endDate, `months`);
+    } else if (monthsNumber >= 24) {
+      setDateType('year');
+      fetchData(startDate, endDate, `years`);
+    } else {
+    }
   }, [startDate, endDate]);
 
+  // Rendu
   return (
     <div>
       <h1 className="mb4"> Active Issues </h1>
       {isBroken ? (
-        <div>
-          <alert>{`Oups ! Trop de requêtes on été envoyées à l'API, réessayer dans 1 minute ;)`}</alert>
+        <div className="tc">
+          <h3>{`Oups ! Trop de requêtes on été envoyées à l'API, réessayer dans 1 minute ;)`}</h3>
         </div>
       ) : (
         <p>
@@ -125,40 +88,20 @@ const ActiveIssues = () => {
         </p>
       )}
       <br />
-      {/* <button onClick={() => console.log(rangeArray)}>Click</button> */}
-      {/* <DatePicker
+      <DatePicker
         selected={startDate}
         onChange={date => {
           setStartDate(date);
+          setEndDate(date);
         }}
-        minDate={new Date('2015/11')}
-        maxDate={new Date()}
-        selectsStart
-        startDate={startDate}
-        endDate={endDate}
-        dateFormat="MM/yyyy"
-        showMonthYearPicker
-      />
-      <DatePicker
-        selected={endDate}
-        onChange={date => setEndDate(date)}
-        selectsEnd
-        startDate={startDate}
-        endDate={endDate}
-        minDate={startDate}
-        maxDate={new Date()}
-        dateFormat="MM/yyyy"
-        showMonthYearPicker
-      /> */}
-      <DatePicker
-        selected={startDate}
-        onChange={date => setStartDate(date)}
         dateFormat="dd/MM/yyyy"
         minDate={new Date('2015/11/17')}
         maxDate={new Date()}
         selectsStart
         startDate={startDate}
         endDate={endDate}
+        showYearDropdown
+        showMonthDropdown
       />
       <DatePicker
         selected={endDate}
@@ -169,6 +112,8 @@ const ActiveIssues = () => {
         endDate={endDate}
         minDate={startDate}
         maxDate={new Date()}
+        showYearDropdown
+        showMonthDropdown
       />
       {!data ? (
         <p>Loading</p>
