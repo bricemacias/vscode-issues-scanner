@@ -3,7 +3,6 @@ import { Line } from 'react-chartjs-2';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 import DatePicker from 'react-datepicker';
-import { addDays } from 'date-fns';
 
 import axios from 'axios';
 
@@ -77,8 +76,8 @@ const ActiveIssues = () => {
     <div>
       <h1 className="mb4"> Active Issues </h1>
       {isBroken ? (
-        <div className="tc">
-          <h3>{`Oups ! Trop de requêtes on été envoyées à l'API, réessayer dans 1 minute ;)`}</h3>
+        <div className="tc ba b--orange">
+          <h3>{`Oups ! Trop de requêtes on été envoyées à l'API, réessayer dans 30 secondes ;)`}</h3>
         </div>
       ) : (
         <p>
@@ -88,6 +87,7 @@ const ActiveIssues = () => {
         </p>
       )}
       <br />
+      <h3>Sélectionner l'intervalle de temps souhaité</h3>
       <DatePicker
         selected={startDate}
         onChange={date => {
@@ -115,6 +115,7 @@ const ActiveIssues = () => {
         showYearDropdown
         showMonthDropdown
       />
+      <br />
       {!data ? (
         <p>Loading</p>
       ) : (
