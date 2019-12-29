@@ -8,40 +8,19 @@ import axios from 'axios';
 const moment = extendMoment(Moment);
 
 const ActiveIssues = () => {
-  const [range, setRange] = useState([
-    moment('2018-01-23'),
-    moment('2018-12-14')
-  ]);
+  const [range, setRange] = useState([moment('2019-01'), moment('2019-12')]);
   const [data, setData] = useState([]);
-
-  //fonction qui fetch la data pour chaque élément d'un range donné et qui retourne cette data
-  // const fetchData = aRange => {
-  //   const issuesNumber = [];
-  //   const data = {};
-  //   const range = moment.range(aRange[0], aRange[1]);
-  //   const rangeObject = Array.from(range.by('months'));
-  //   const rangeArray = rangeObject.map(m => m.format('YYYY-MM'));
-  //   rangeArray.forEach(async el =>
-  //     axios
-  //       .get(
-  //         `https://api.github.com/search/issues?q=repo:microsoft/vscode%20state:open%20created:${el}&per_page=1`,
-  //         {
-  //           headers: {
-  //             Authorization: `Token a78c9527482b423d8c92e3b805bfe2081582daea`
-  //           }
-  //         }
-  //       )
-  //       .then(response => issuesNumber.push(response.data.total_count))
-  //   );
-  // };
+  const [isBroken, setIsBroken] = useState(0);
 
   useEffect(() => {
-    //faire le premier itération du set, avec la fonction au dessus
-    const range1 = moment.range(range[0], range[1]);
-    const rangeObject = Array.from(range1.by('months'));
+    const rangeMoment = moment.range(range[0], range[1]);
+    const rangeObject = Array.from(rangeMoment.by('months'));
     const rangeArray = rangeObject.map(m => m.format('YYYY-MM'));
-    const issuesNumber = rangeArray.forEach(
-      el =>
+    for (let el of rangeArray) {
+      if (isBroken === 1) {
+        console.log('BONJOUUUUUR');
+        break;
+      } else if (isBroken === 0) {
         axios
           .get(
             `https://api.github.com/search/issues?q=repo:microsoft/vscode%20state:open%20created:${el}&per_page=1`,
@@ -51,7 +30,6 @@ const ActiveIssues = () => {
               }
             }
           )
-
           .then(response =>
             setData(data => [
               ...data,
@@ -64,26 +42,28 @@ const ActiveIssues = () => {
               }
             ])
           )
-      // .then(setData(data => data.sort((a, b) => b.x - a.x)))
-      // .then(response =>
-      //   setData([...data, (this.state.data[el] = response.data.total_count)])
-      // )
-    );
+          .catch(err => {
+            setIsBroken(1);
+          });
+      }
+    }
   }, []);
 
   return (
     <div>
       <h1 className="mb4"> Active Issues </h1>
-      {/* <button
-        onClick={() =>
-          console.log(data.sort((a, b) => new Date(b.x) - new Date(a.x)))
-        }
-      >
-        Click
-      </button> */}
-      <button onClick={() => console.log(data.sort((a, b) => b.x - a.x))}>
-        Click
-      </button>
+      {isBroken ? (
+        <div>
+          <alert>{`Oups ! Trop de requêtes on été envoyées à l'API, réessayer dans 1 minute ;)`}</alert>
+        </div>
+      ) : (
+        <p>
+          Afin d'éviter de surcharger l'API, essayer d'espacer vos requêtes de
+          quelques secondes
+        </p>
+      )}
+      <br />
+      <button onClick={() => console.log(isBroken)}>Click</button>
       {!data ? (
         <p>Loading</p>
       ) : (
@@ -107,18 +87,8 @@ const ActiveIssues = () => {
             datasets: [
               {
                 label: 'Number of active issues',
-                backgroundColor: 'rgba(255,0,255,0.75)',
+                backgroundColor: 'rgba(0, 255 ,255,0.60)',
                 data: data.sort((a, b) => b.x - a.x)
-                // [
-                //   {
-                //     x: moment(datax[0]),
-                //     y: 17
-                //   },
-                //   {
-                //     x: moment(datax[1]),
-                //     y: 10
-                //   }
-                // ]
               }
             ]
           }}
@@ -127,23 +97,5 @@ const ActiveIssues = () => {
     </div>
   );
 };
-
-// const mapStateToProps = state => {
-//   return {
-//     pageNumber: state.pageNumber,
-//     issues: state.activeIssues
-//   };
-// };
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onSetPage: number => dispatch(setPage(number)),
-//     onNextPage: () => dispatch(nextPage()),
-//     onRequestActiveIssues: (year, month) =>
-//       dispatch(requestActiveIssues(year, month))
-//   };
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(ActiveIssues);
 
 export default ActiveIssues;

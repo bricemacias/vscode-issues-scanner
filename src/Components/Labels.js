@@ -43,7 +43,7 @@ const Labels = ({
             datasets: [
               {
                 label: 'Number of labels for each issue',
-                backgroundColor: 'rgba(255,0,255,0.75)',
+                backgroundColor: 'rgba(255,0,255,0.70)',
                 data: [...labeledIssues]
               }
             ]

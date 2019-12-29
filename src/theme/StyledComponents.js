@@ -10,6 +10,8 @@ export const Container = styled.div`
   padding-right: 32px;
   max-width: 1280px;
   margin: auto;
+  margin-top: 10%;
+  margin-bottom: 10%;
 `;
 
 export const Box = styled.div`
