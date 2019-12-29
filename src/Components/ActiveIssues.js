@@ -10,63 +10,104 @@ import axios from 'axios';
 const moment = extendMoment(Moment);
 
 const ActiveIssues = () => {
+  // Les différents states et leurs fonctions
   const [isBroken, setIsBroken] = useState(0);
   const [data, setData] = useState([]);
 
-  const [startDate, setStartDate] = useState(new Date('2019/03'));
-  const [endDate, setEndDate] = useState(new Date('2019/12'));
-  const [rangeArray, setRangeArray] = useState([]);
+  const [startDate, setStartDate] = useState(new Date('2019/12/1'));
+  const [endDate, setEndDate] = useState(new Date('2019/12/13'));
+  const [dateType, setDateType] = useState('day');
 
+  // La fonction permettant de récupérer les données de l'API
+  const fetchData = (aStartDate, aEndDate, aDateType) => {
+    const rangeMoment = moment.range(moment(aStartDate), moment(aEndDate));
+    const rangeObject = Array.from(rangeMoment.by(aDateType));
+    const rangeArray = rangeObject.map(m => m.format('YYYY-MM-DD'));
+    console.log(rangeObject);
+    console.log(rangeArray);
+
+    for (let el of rangeArray) {
+      axios
+        .get(
+          `https://api.github.com/search/issues?q=repo:microsoft/vscode%20state:open%20created:${el}&per_page=1`,
+          {
+            headers: {
+              Authorization: `Token a78c9527482b423d8c92e3b805bfe2081582daea`
+            }
+          }
+        )
+        .then(response =>
+          setData(data => [
+            ...data,
+            {
+              x: moment(response.data.items[0].created_at).subtract(
+                1,
+                aDateType
+              ),
+              y: response.data.total_count
+            }
+          ])
+        )
+        .catch(err => {
+          setIsBroken(1);
+        });
+    }
+  };
+
+  // Permet de lancer la lancer la fonction fetchData lors dès que le composant est monté ou que les dates de début et de fin sont changées
   useEffect(() => {
     setData([]);
-    const rangeMoment = moment.range(moment(startDate), moment(endDate));
-    console.log(rangeMoment);
-    const rangeYears = Array.from(rangeMoment.by('Years'));
-    const rangeMonths = Array.from(rangeMoment.by('months'));
-    const rangeDays = Array.from(rangeMoment.by('days'));
-    //let rangeArray = {};
+    fetchData(startDate, endDate, `${dateType}s`);
+    // const rangeMoment = moment.range(moment(startDate), moment(endDate));
+    // console.log(rangeMoment);
+    // const rangeYears = Array.from(rangeMoment.by('years'));
+    // const rangeMonths = Array.from(rangeMoment.by('months'));
+    // const rangeDays = Array.from(rangeMoment.by('days'));
+
+    // let rangeArray = {};
     // if (rangeYears.length > 2) {
-    //   rangeArray = rangeYears.map(m => m.format('YYYY'));
+    //   setRangeArray(rangeYears.map(m => m.format('YYYY')));
     // } else if (rangeMonths > 1) {
-    //   rangeArray = rangeMonths.map(m => m.format('YYYY-MM'));
+    //   setRangeArray(rangeMonths.map(m => m.format('YYYY-MM')));
     // } else {
-    //   rangeArray = rangeDays.map(m => m.format('YYYY-MM-DD'));
+    //   setRangeArray(rangeDays.map(m => m.format('YYYY-MM-DD')));
     // }
     // console.log(rangeYears);
     // console.log(rangeMonths);
     // console.log(rangeDays);
-    const rangeArray = rangeMonths.map(m => m.format('YYYY-MM'));
 
-    for (let el of rangeArray) {
-      if (isBroken === 1) {
-        break;
-      } else if (isBroken === 0) {
-        axios
-          .get(
-            `https://api.github.com/search/issues?q=repo:microsoft/vscode%20state:open%20created:${el}&per_page=1`,
-            {
-              headers: {
-                Authorization: `Token a78c9527482b423d8c92e3b805bfe2081582daea`
-              }
-            }
-          )
-          .then(response =>
-            setData(data => [
-              ...data,
-              {
-                x: moment(response.data.items[0].created_at).subtract(
-                  1,
-                  'months'
-                ),
-                y: response.data.total_count
-              }
-            ])
-          )
-          .catch(err => {
-            setIsBroken(1);
-          });
-      }
-    }
+    // const rangeArray = rangeMonths.map(m => m.format('YYYY-MM'));
+
+    // for (let el of rangeArray) {
+    //   if (isBroken === 1) {
+    //     break;
+    //   } else if (isBroken === 0) {
+    //     axios
+    //       .get(
+    //         `https://api.github.com/search/issues?q=repo:microsoft/vscode%20state:open%20created:${el}&per_page=1`,
+    //         {
+    //           headers: {
+    //             Authorization: `Token a78c9527482b423d8c92e3b805bfe2081582daea`
+    //           }
+    //         }
+    //       )
+    //       .then(response =>
+    //         setData(data => [
+    //           ...data,
+    //           {
+    //             x: moment(response.data.items[0].created_at).subtract(
+    //               1,
+    //               'months'
+    //             ),
+    //             y: response.data.total_count
+    //           }
+    //         ])
+    //       )
+    //       .catch(err => {
+    //         setIsBroken(1);
+    //       });
+    //   }
+    // }
   }, [startDate, endDate]);
 
   return (
@@ -84,11 +125,11 @@ const ActiveIssues = () => {
         </p>
       )}
       <br />
-      <DatePicker
+      {/* <button onClick={() => console.log(rangeArray)}>Click</button> */}
+      {/* <DatePicker
         selected={startDate}
         onChange={date => {
           setStartDate(date);
-          setEndDate(addDays(date, 365));
         }}
         minDate={new Date('2015/11')}
         maxDate={new Date()}
@@ -105,11 +146,11 @@ const ActiveIssues = () => {
         startDate={startDate}
         endDate={endDate}
         minDate={startDate}
-        maxDate={addDays(startDate, 730)}
+        maxDate={new Date()}
         dateFormat="MM/yyyy"
         showMonthYearPicker
-      />
-      {/* <DatePicker
+      /> */}
+      <DatePicker
         selected={startDate}
         onChange={date => setStartDate(date)}
         dateFormat="dd/MM/yyyy"
@@ -128,7 +169,7 @@ const ActiveIssues = () => {
         endDate={endDate}
         minDate={startDate}
         maxDate={new Date()}
-      /> */}
+      />
       {!data ? (
         <p>Loading</p>
       ) : (
@@ -141,7 +182,7 @@ const ActiveIssues = () => {
                   {
                     type: 'time',
                     time: {
-                      unit: 'month'
+                      unit: dateType
                     }
                   }
                 ]
