@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 const Authors = () => {
@@ -8,6 +8,8 @@ const Authors = () => {
   const handleChange = event => {
     setSearchName(event.target.value);
   };
+
+  // On lance la recherche de l'auteur correspondant lorsque l'on clique sur le bouton
   const handleClick = () => {
     axios
       .get(
@@ -34,6 +36,7 @@ const Authors = () => {
     <div>
       <h1 className="pb3">Search authors by name</h1>
       <div className="pa3 ma1">
+        {/* Input permettant de faire la recherche */}
         <input
           className="ba br3 b--near-white bg-white"
           type="search"
@@ -46,6 +49,7 @@ const Authors = () => {
           Search
         </button>
       </div>
+      {/* Si l'utilisateur a déposé au moins une issue, son nom et le nombre d'issues total postées par lui apparaitra ici*/}
       <div className="mb4">
         {fetchedName.data ===
         `Sorry, this user didn't post any issue on this repository` ? (
