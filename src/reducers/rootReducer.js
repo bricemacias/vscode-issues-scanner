@@ -19,6 +19,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         error: action.payload
       };
+    case 'CHANGEPAGE':
+      return {
+        ...state,
+        pageNumber: action.pagePayload
+      };
     case 'NEXTPAGE':
       return {
         ...state,

@@ -3786,6 +3786,11 @@ es6-symbol@^3.1.0, es6-symbol@^3.1.1, es6-symbol@~3.1.3:
     d "^1.0.1"
     ext "^1.1.2"
 
+es6-viewpoint@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/es6-viewpoint/-/es6-viewpoint-0.1.3.tgz#9b1b99a286b618d6d6b71f1503deb0d0a7869dc5"
+  integrity sha1-mxuZooa2GNbWtx8VA96w0KeGncU=
+
 escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
@@ -8606,6 +8611,14 @@ react-onclickoutside@^6.9.0:
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.9.0.tgz#a54bc317ae8cf6131a5d78acea55a11067f37a1f"
   integrity sha512-8ltIY3bC7oGhj2nPAvWOGi+xGFybPNhJM0V1H8hY/whNcXgmDeaeoCMPPd8VatrpTsUWjb/vGzrmu6SrXVty3A==
 
+react-picker@^1.2.15:
+  version "1.2.15"
+  resolved "https://registry.yarnpkg.com/react-picker/-/react-picker-1.2.15.tgz#a089145040084dd5cc057fe76e6cfa6cf468c8b5"
+  integrity sha512-m6EoxcHj3JvmWg1Xc+d4ReZrgUg3q915w++5hYXsbhS7fE/RDOikLJEtvh85SYuSl9hbPpkwwczufysMusnj3Q==
+  dependencies:
+    es6-viewpoint "^0.1.3"
+    react-tapper "^0.1.17"
+
 react-popper@^1.3.4:
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-1.3.7.tgz#f6a3471362ef1f0d10a4963673789de1baca2324"
@@ -8719,6 +8732,11 @@ react-scripts@3.3.0:
     workbox-webpack-plugin "4.3.1"
   optionalDependencies:
     fsevents "2.1.2"
+
+react-tapper@^0.1.17:
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/react-tapper/-/react-tapper-0.1.18.tgz#0b6976c1e115379d509e1d6726d3255f3be63778"
+  integrity sha512-eNcEg+3gX1qwdn6kVq4OegZHia4xw3W5WNUWf1FvGj0QCrBZsrCOx+vxMrcstmgH78dT37iJUPQmga4PIJplDQ==
 
 react@^16.12.0:
   version "16.12.0"

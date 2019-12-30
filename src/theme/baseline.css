@@ -12,9 +12,39 @@ body {
   background: #2c2e7b;
 }
 
+button {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.search-button {
+  font-size: 10px;
+}
+
+@media screen and (max-width: 700px) {
+  .responsive-button {
+    font-size: 10px;
+  }
+}
+
 @media screen and (max-width: 500px) {
   #menu {
     flex-direction: column;
+  }
+  .responsive-button {
+    font-size: 8px;
+  }
+  .responsive-button-group {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2%;
   }
 }
 

@@ -41,7 +41,7 @@ const Authors = () => {
           value={searchName}
           onChange={handleChange}
         />
-        <button type="submit" onClick={handleClick}>
+        <button className="search-button" type="submit" onClick={handleClick}>
           {' '}
           Search
         </button>

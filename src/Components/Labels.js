@@ -35,15 +35,34 @@ const Labels = ({
       <h1 className="mb4"> Labels </h1>
       <div>
         <p>{`Issues are classified from the most recent date of creation, corresponding to No. 1, to the oldest. 
-        
+
         Change page to load more results, and wait for the results to load.
         
         `}</p>
       </div>
-      <div>
-        <button onClick={onNextPage}>Next Page</button>
-        <button onClick={onPreviousPage}>Previous Page</button>
-      </div>
+
+      {pageNumber === 1 ? (
+        <div className="responsive-button-group ma1">
+          <button className="responsive-button" onClick={onNextPage}>
+            Next Page
+          </button>
+        </div>
+      ) : pageNumber > 1 && pageNumber < 44 ? (
+        <div className="responsive-button-group ma1">
+          <button className="responsive-button" onClick={onNextPage}>
+            Next Page
+          </button>
+          <button className="responsive-button" onClick={onPreviousPage}>
+            Previous Page
+          </button>
+        </div>
+      ) : (
+        <div className="responsive-button-group ma1">
+          <button className="responsive-button" onClick={onPreviousPage}>
+            Previous Page
+          </button>
+        </div>
+      )}
 
       {!issues ? (
         <p>Loading</p>
