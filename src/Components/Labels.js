@@ -3,13 +3,19 @@ import { Bar } from 'react-chartjs-2';
 
 import { connect } from 'react-redux';
 
-import { requestLabelIssues, setPage, nextPage } from '../actions/actions';
+import {
+  requestLabelIssues,
+  setPage,
+  nextPage,
+  previousPage
+} from '../actions/actions';
 // Ce composant utilise redux pour la gestion d'état (même si ce n'est pas indispensable)
 
 const Labels = ({
   onRequestLabelIssues,
   onSetPage,
   onNextPage,
+  onPreviousPage,
   pageNumber,
   issues
 }) => {
@@ -28,10 +34,17 @@ const Labels = ({
     <div>
       <h1 className="mb4"> Labels </h1>
       <div>
-        <p>{`Les issues sont classées de la date de création la plus récente, correspondant au n°1, à la plus ancienne. 
-        Changer de page pour charger plus de résultats, et attendez que les résultats se chargent.`}</p>
+        <p>{`Issues are classified from the most recent date of creation, corresponding to No. 1, to the oldest. 
+        
+        Change page to load more results, and wait for the results to load.
+        
+        `}</p>
       </div>
-      <button onClick={onNextPage}>Next Page</button>
+      <div>
+        <button onClick={onNextPage}>Next Page</button>
+        <button onClick={onPreviousPage}>Previous Page</button>
+      </div>
+
       {!issues ? (
         <p>Loading</p>
       ) : (
@@ -73,6 +86,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onSetPage: number => dispatch(setPage(number)),
     onNextPage: () => dispatch(nextPage()),
+    onPreviousPage: () => dispatch(previousPage()),
     onRequestLabelIssues: page => dispatch(requestLabelIssues(page))
   };
 };

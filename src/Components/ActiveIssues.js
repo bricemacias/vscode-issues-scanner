@@ -39,7 +39,7 @@ const ActiveIssues = () => {
           setData(data => [
             ...data,
             {
-              x: moment(el).subtract(1, aDateType),
+              x: moment(el),
               y: response.data.total_count
             }
           ])
@@ -55,19 +55,18 @@ const ActiveIssues = () => {
     setData([]);
     setIsBroken(0);
     const rangeMoment = moment.range(moment(startDate), moment(endDate));
-    const rangeInMonths = Array.from(rangeMoment.by('months'));
-    const monthsNumber = rangeInMonths.length;
-    console.log(monthsNumber);
-    if (monthsNumber === 1) {
+    const rangeInDays = Array.from(rangeMoment.by('days'));
+    const daysNumber = rangeInDays.length;
+    console.log(daysNumber);
+    if (daysNumber <= 29) {
       setDateType('day');
       fetchData(startDate, endDate, `days`, 'YYYY-MM-DD');
-    } else if (monthsNumber > 1 && monthsNumber < 24) {
+    } else if (daysNumber > 29 && daysNumber < 730) {
       setDateType('month');
       fetchData(startDate, endDate, `months`, 'YYYY-MM');
-    } else if (monthsNumber >= 24) {
+    } else if (daysNumber >= 730) {
       setDateType('year');
       fetchData(startDate, endDate, `years`, 'YYYY');
-    } else {
     }
   }, [startDate, endDate]);
 
@@ -77,17 +76,17 @@ const ActiveIssues = () => {
       <h1 className="mb4"> Active Issues </h1>
       {isBroken ? (
         <div className="tc ba b--orange">
-          <h3>{`Oups ! Trop de requêtes on été envoyées à l'API, réessayer dans 30 secondes ;)`}</h3>
+          <h3>{`Oops! Too many requests have been sent to the API, try again in 30 seconds ;)`}</h3>
         </div>
       ) : (
         <p>
-          Afin d'éviter de surcharger l'API, essayer d'espacer vos requêtes de
-          quelques secondes. Une limite de deux ans d'intervalle a également été
-          fixée
+          {`To avoid overloading the API, try to space your requests a few seconds apart. 
+          
+          For values greater than 30 days, the scale is displayed in months, and for values greater than two months, it is displayed in years.`}
         </p>
       )}
       <br />
-      <h3>Sélectionner l'intervalle de temps souhaité</h3>
+      <h3>Select the desired time interval</h3>
       <DatePicker
         selected={startDate}
         onChange={date => {

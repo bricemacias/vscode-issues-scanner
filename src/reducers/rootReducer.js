@@ -24,6 +24,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         pageNumber: state.pageNumber + 1
       };
+    case 'PREVIOUSPAGE':
+      return {
+        ...state,
+        pageNumber: state.pageNumber - 1
+      };
     default:
       return state;
   }

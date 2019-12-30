@@ -29,3 +29,7 @@ export const setPage = pageValue => ({
 export const nextPage = () => ({
   type: 'NEXTPAGE'
 });
+
+export const previousPage = () => ({
+  type: 'PREVIOUSPAGE'
+});

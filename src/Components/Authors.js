@@ -46,17 +46,19 @@ const Authors = () => {
           Search
         </button>
       </div>
-      {fetchedName.data ===
-      `Sorry, this user didn't post any issue on this repository` ? (
-        <p className="ml3">{fetchedName.data}</p>
-      ) : fetchedName ? (
-        <p className="ml3">
-          <strong>{fetchedName.name}</strong>
-          {`: ${fetchedName.data.total_count} issues opened by this user in this repository`}
-        </p>
-      ) : (
-        <p></p>
-      )}
+      <div className="mb4">
+        {fetchedName.data ===
+        `Sorry, this user didn't post any issue on this repository` ? (
+          <p className="ml3">{fetchedName.data}</p>
+        ) : fetchedName ? (
+          <p className="ml3">
+            <strong>{fetchedName.name}</strong>
+            {`: ${fetchedName.data.total_count} issues opened by this user in this repository`}
+          </p>
+        ) : (
+          <p></p>
+        )}
+      </div>
     </div>
   );
 };
