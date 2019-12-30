@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import { Line } from 'react-chartjs-2';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
@@ -17,7 +18,7 @@ const ActiveIssues = () => {
   const [endDate, setEndDate] = useState(new Date('2019/12/13'));
   const [dateType, setDateType] = useState('day');
 
-  // La fonction permettant de récupérer les données de l'API
+  // La fonction permettant de récupérer les données de l'API et de les stocker dans data
   const fetchData = (aStartDate, aEndDate, aDateType, format) => {
     const rangeMoment = moment.range(moment(aStartDate), moment(aEndDate));
     const rangeObject = Array.from(rangeMoment.by(aDateType));
@@ -30,6 +31,7 @@ const ActiveIssues = () => {
         .get(
           `https://api.github.com/search/issues?q=repo:microsoft/vscode%20state:open%20created:${el}&per_page=1`,
           {
+            // Le token permet d'avoir un nombre de requêtes successives plus large et donc de surcharger l'API moins vite
             headers: {
               Authorization: `Token a78c9527482b423d8c92e3b805bfe2081582daea`
             }

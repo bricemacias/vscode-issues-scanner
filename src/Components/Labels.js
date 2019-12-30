@@ -8,7 +8,7 @@ import {
   setPage,
   nextPage,
   previousPage
-} from '../actions/actions';
+} from '../redux/actions/actions';
 // Ce composant utilise redux pour la gestion d'état (même si ce n'est pas indispensable, c'est utile pour faire de la visualisation et pour conserver l'état lors de la navigation)
 
 const Labels = ({
