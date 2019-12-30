@@ -9,7 +9,7 @@ import {
   nextPage,
   previousPage
 } from '../actions/actions';
-// Ce composant utilise redux pour la gestion d'état (même si ce n'est pas indispensable)
+// Ce composant utilise redux pour la gestion d'état (même si ce n'est pas indispensable, c'est utile pour faire de la visualisation et pour conserver l'état lors de la navigation)
 
 const Labels = ({
   onRequestLabelIssues,
@@ -40,7 +40,12 @@ const Labels = ({
         
         `}</p>
       </div>
-
+      <div className="page-number ml2">
+        <p>
+          <strong>Page Number : </strong>
+          {pageNumber}
+        </p>
+      </div>
       {pageNumber === 1 ? (
         <div className="responsive-button-group ma1">
           <button className="responsive-button" onClick={onNextPage}>

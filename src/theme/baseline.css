@@ -46,6 +46,10 @@ button {
     justify-content: center;
     margin-bottom: 2%;
   }
+  .page-number {
+    text-align: center;
+    font-size: small;
+  }
 }
 
 @media screen and (min-width: 320px) {
