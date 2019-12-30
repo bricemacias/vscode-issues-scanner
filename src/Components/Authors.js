@@ -35,10 +35,10 @@ const Authors = () => {
   return (
     <div>
       <h1 className="pb3">Search authors by name</h1>
-      <div className="pa3 ma1">
+      <div className="pa3 ma1 search-elements">
         {/* Input permettant de faire la recherche */}
         <input
-          className="ba br3 b--near-white bg-white"
+          className="ba b--near-white bg-white searchbox"
           type="search"
           placeholder="Search Authors"
           value={searchName}

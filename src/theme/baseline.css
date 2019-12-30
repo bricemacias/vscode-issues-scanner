@@ -23,8 +23,23 @@ button {
   font-size: 12px;
 }
 
+.search-elements {
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  margin: 0 auto;
+  overflow: auto;
+}
+
 .search-button {
-  font-size: 10px;
+  font-size: 9.5px;
+  float: left;
+}
+
+.searchbox {
+  height: 40px;
+  padding: 0;
+  float: left;
 }
 
 @media screen and (max-width: 700px) {
