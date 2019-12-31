@@ -20,7 +20,6 @@ export const Box = styled.div`
   border-radius: 5px;
   justify-content: center;
   background: white;
-  height: 100vh
   width: 100%
   flex-direction: column;
   white-space: pre-line;
