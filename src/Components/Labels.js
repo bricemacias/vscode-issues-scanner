@@ -49,7 +49,7 @@ const Labels = ({
   return (
     <div className="ml2 mr2">
       <h1 className="mb4"> Labels </h1>
-      <div className="ml2 mr2">
+      <div>
         <p>{`Issues are classified from the most recent date of creation, corresponding to No. 1, to the oldest. 
 
         Change page to load more results, and wait for the results to load.
