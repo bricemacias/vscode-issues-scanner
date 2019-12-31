@@ -21,7 +21,7 @@ export default class ErrorBoundary extends Component {
     if (error) {
       return (
         <div>
-          <h2>Huho, quelque chose cloche ! </h2>
+          <h2>Oops ! Something went wrong </h2>
           <p>{error && error.toString()}</p>
           <br />
           <pre>{errorInfo.componentStack}</pre>

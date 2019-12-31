@@ -25,14 +25,15 @@ function App() {
             </Header>
             <Navigation />
             <hr />
-
-            <Suspense fallback={<div>Loading...</div>}>
-              <Switch>
-                <Route exact path="/" component={Labels} />
-                <Route path="/activeissues" component={ActiveIssues} />
-                <Route path="/authors" component={Authors} />
-              </Switch>
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<div>Loading...</div>}>
+                <Switch>
+                  <Route exact path="/" component={Labels} />
+                  <Route path="/activeissues" component={ActiveIssues} />
+                  <Route path="/authors" component={Authors} />
+                </Switch>
+              </Suspense>
+            </ErrorBoundary>
           </Router>
         </Box>
       </Container>
