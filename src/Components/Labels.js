@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 
 import { connect } from 'react-redux';
@@ -19,6 +19,22 @@ const Labels = ({
   pageNumber,
   issues
 }) => {
+  // Etat et fonction permettant de choisir un numéro de page spécifique
+  const [page, setPage] = useState(pageNumber);
+  const handleChange = event => {
+    setPage(event.target.value);
+  };
+  const handleClick = () => {
+    if (page > 0 && page <= 44) onSetPage(page);
+    else if (page <= 0) {
+      onSetPage(1);
+    } else if (page > 44) {
+      onSetPage(44);
+    } else {
+      alert('Please, enter a valid number between 1 and 44');
+    }
+  };
+
   // Execute la fonction permettant de récupérer les données dès que le composant est monté ou que le numéro de la page est changé
   useEffect(() => {
     (async function fetchIssues() {
@@ -31,15 +47,29 @@ const Labels = ({
   const labeledNumbers = [];
 
   return (
-    <div>
+    <div className="ml2 mr2">
       <h1 className="mb4"> Labels </h1>
-      <div>
+      <div className="ml2 mr2">
         <p>{`Issues are classified from the most recent date of creation, corresponding to No. 1, to the oldest. 
 
         Change page to load more results, and wait for the results to load.
         
         `}</p>
       </div>
+      {/* Permet de choisir un numéro de page spécifique*/}
+      <div className="page-elements">
+        <input
+          className="ba b--near-white bg-white pagebox"
+          type="search"
+          placeholder="Enter Page Number"
+          onChange={handleChange}
+        />
+        <button className="page-button" type="submit" onClick={handleClick}>
+          {' '}
+          Set Page
+        </button>
+      </div>
+      <br />
       <div className="page-number ml2">
         <p>
           <strong>Page Number : </strong>
@@ -54,11 +84,11 @@ const Labels = ({
         </div>
       ) : pageNumber > 1 && pageNumber < 44 ? (
         <div className="responsive-button-group ma1">
-          <button className="responsive-button" onClick={onNextPage}>
-            Next Page
-          </button>
           <button className="responsive-button" onClick={onPreviousPage}>
             Previous Page
+          </button>
+          <button className="responsive-button" onClick={onNextPage}>
+            Next Page
           </button>
         </div>
       ) : (

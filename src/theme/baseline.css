@@ -36,6 +36,7 @@ button {
   float: left;
   margin: 0;
   padding: auto;
+  background-color: #008cba;
 }
 
 .searchbox {
@@ -44,6 +45,23 @@ button {
   float: left;
   margin: 0;
   padding: 0;
+}
+
+.page-elements {
+  overflow: hidden;
+}
+
+.page-button {
+  font-size: 9.5px;
+  float: left;
+  background-color: #008cba;
+}
+
+.pagebox {
+  height: 40px;
+  padding: 0;
+  float: left;
+  overflow: auto;
 }
 
 @media screen and (max-width: 700px) {

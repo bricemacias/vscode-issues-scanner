@@ -33,7 +33,7 @@ const Authors = () => {
       });
   };
   return (
-    <div>
+    <div className="mr2 ml2 mt0 mb0">
       <h1 className="m0 p0 pb3">Search authors by name</h1>
       <div className="pa3 ma1 search-elements">
         {/* Input permettant de faire la recherche */}

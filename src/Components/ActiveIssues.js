@@ -74,7 +74,7 @@ const ActiveIssues = () => {
 
   // Rendu
   return (
-    <div>
+    <div className="ml2 mr2">
       <h1 className="mb4"> Active Issues </h1>
       {isBroken ? (
         <div className="tc ba b--orange">
