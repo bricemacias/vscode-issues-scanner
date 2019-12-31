@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import theme from './theme/';
@@ -8,9 +8,9 @@ import { Container, Box, Header, Title } from './theme/StyledComponents';
 
 import Navigation from './Components/Layout/Navigation';
 
-import Labels from './Components/Labels';
-import ActiveIssues from './Components/ActiveIssues';
-import Authors from './Components/Authors';
+const Labels = React.lazy(() => import('./Components/Labels'));
+const ActiveIssues = React.lazy(() => import('./Components/ActiveIssues'));
+const Authors = React.lazy(() => import('./Components/Authors'));
 
 function App() {
   return (
@@ -24,11 +24,13 @@ function App() {
             <Navigation />
             <hr />
 
-            <Switch>
-              <Route exact path="/" component={Labels} />
-              <Route path="/activeissues" component={ActiveIssues} />
-              <Route path="/authors" component={Authors} />
-            </Switch>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Switch>
+                <Route exact path="/" component={Labels} />
+                <Route path="/activeissues" component={ActiveIssues} />
+                <Route path="/authors" component={Authors} />
+              </Switch>
+            </Suspense>
           </Router>
         </Box>
       </Container>

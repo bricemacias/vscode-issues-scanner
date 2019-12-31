@@ -34,12 +34,16 @@ button {
 .search-button {
   font-size: 9.5px;
   float: left;
+  margin: 0;
+  padding: auto;
 }
 
 .searchbox {
   height: 40px;
   padding: 0;
   float: left;
+  margin: 0;
+  padding: 0;
 }
 
 @media screen and (max-width: 700px) {
