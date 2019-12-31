@@ -34,7 +34,35 @@ const Authors = () => {
   };
   return (
     <div>
-      <h1 className="pb3">Search authors by name</h1>
+      <h1 className="m0 p0 pb3">Search authors by name</h1>
+      <div className="pa3 ma1 search-elements">
+        {/* Input permettant de faire la recherche */}
+        <input
+          className="ba b--near-white bg-white searchbox"
+          type="search"
+          placeholder="Search Authors"
+          value={searchName}
+          onChange={handleChange}
+        />
+        <button className="search-button" type="submit" onClick={handleClick}>
+          {' '}
+          Search
+        </button>
+      </div>
+      {/* Si l'utilisateur a déposé au moins une issue, son nom et le nombre d'issues total postées par lui apparaitra ici*/}
+      <div className="mb4">
+        {fetchedName.data ===
+        `Sorry, this user didn't post any issue on this repository` ? (
+          <p className="ml3">{fetchedName.data}</p>
+        ) : fetchedName ? (
+          <p className="ml3">
+            <strong>{fetchedName.name}</strong>
+            {`: ${fetchedName.data.total_count} issues opened by this user in this repository`}
+          </p>
+        ) : (
+          <p></p>
+        )}
+      </div>
     </div>
   );
 };
