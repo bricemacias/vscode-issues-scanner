@@ -4,6 +4,8 @@ import { ThemeProvider } from 'styled-components';
 import theme from './theme/';
 import './theme/baseline.css';
 
+import ErrorBoundary from './Components/ErrorBoundary/ErrorBoundary';
+
 import { Container, Box, Header, Title } from './theme/StyledComponents';
 
 import Navigation from './Components/Layout/Navigation';
