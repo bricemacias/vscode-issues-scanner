@@ -7,6 +7,7 @@ const AuthorsList = () => {
   const [page, setPage] = useState(1);
   const [isBroken, setIsBroken] = useState(0);
 
+  // Permet de récupérer les issues les plus récentes, et pou chaque auteur, récupéré son nombre d'issues postées
   useEffect(() => {
     axios
       .get(
@@ -68,6 +69,7 @@ const AuthorsList = () => {
           `}
             </h4>
           )}
+          {/* Permet de fitrer les doublons, de classer la liste par nombre d'issues postées, et de charger plus de résultats grâce au bouton Load More */}
           {authors
             .filter(
               (thing, index, self) =>
