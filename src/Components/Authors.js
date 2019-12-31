@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import AuthorsList from './AuthorsList/AuthorsList';
 
 const Authors = () => {
   const [searchName, setSearchName] = useState('');
@@ -63,6 +64,7 @@ const Authors = () => {
           <p></p>
         )}
       </div>
+      <AuthorsList />
     </div>
   );
 };
