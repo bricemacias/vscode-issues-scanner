@@ -39,6 +39,8 @@ export const Header = styled.div`
   background-size: 100% 100%;
   background-color: black;
   color: white;
+  margin: 0;
+  margin-bottom: 2px;
 `;
 
 export const Title = styled.h1.attrs({
